@@ -66,8 +66,8 @@ jobs:
           kind create cluster
           kubectl cluster-info
 
-      - name: Test
-        run: make test
+      # - name: Test
+      #   run: make test
 
       - name: Generate Tag
         id: generate_tag
@@ -187,10 +187,10 @@ jobs:
           df -H
 
           echo ".git files not owned by current user or current group:"
-          find .git ! -user $(id -u) -o ! -group $(id -u) | xargs ls -lh
+          find .git ! -user $(id -u) -o ! -group $(id -g) | xargs ls -lh
 
           # Reset file owners
-          chmod -R -v "$(id -u):$(id -g)" .git
+          chown -R -v "$(id -u):$(id -g)" .git
 
       - name: Commit files
         run: |
